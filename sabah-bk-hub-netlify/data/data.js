@@ -108,28 +108,28 @@
       ppps: [r(1, 1.2, 2), r(1.2, 1.5, 2), r(1.1, 1.4, 2), r(0.9, 1.1, 2), r(0.9, 1.1, 2)],
       coverage: [["Drop", r(15, 35)], ["Show", r(10, 25)], ["Switch", r(10, 25)], ["Ice", r(5, 20)], ["Under", r(5, 15)]],
       key: { n: 9 + i, name: "Key player", pos: pick(["SG", "PG", "PF"]), pts: r(12, 22, 1), fg: r(41, 52), tp: r(31, 41), tags: ["Scorer", "Pull up off dribble", "Takes 20% of their shots"], shots: bins(42, 2) },
-      sets: [["H1A", "Horns Weave + PNR", r(18, 32)], ["H2E", "Spain PNR", r(8, 15)], ["H3A", "Shuffle Post Up", r(5, 11)], ["T1", "Ball Reversal DHO", r(5, 12)]].map(([c, n, u]) => ({ code: c, name: n, use: u, ppp: r(0.8, 1.5, 2), adj: pick(["Be aggressive on the weave", "Switch the 1 to 4", "Ice the ball screen", "Stay home on shooters"]) })),
+      sets: [["H1A", "", r(18, 32)], ["H2E", "", r(8, 15)], ["H3A", "", r(5, 11)], ["T1", "", r(5, 12)]].map(([c, n, u]) => ({ code: c, name: n, use: u, ppp: r(0.8, 1.5, 2), adj: pick(["Our rules", "Switch the 1 to 4", "Ice the ball screen", "Stay home on shooters"]) })),
       players: Array.from({ length: 8 }, (_, k) => ({ n: k * 3 + 2, name: "Player " + String.fromCharCode(65 + k), min: r(10, 30, 1), pts: r(3, 20, 1), reb: r(1, 8, 1), ast: r(0.5, 5, 1), fg: r(35, 58), tp: r(22, 42) })).sort((a, b) => b.pts - a.pts)
     };
   });
 
   const playbook = [
     ["Fast break", ["Outlet", "Kick ahead", "Kick across", "Rim runner", "Early 1 on 1"]],
-    ["1 Series", ["1 Ghost", "15 Ghost veer"]], ["2 Series", ["2 Low", "2 Flash", "2 Down", "2 Special"]],
-    ["3 Series", ["3 Side", "3 Down", "3 Curl"]], ["Elbow Series", ["Elbow 4", "Elbow 5", "Elbow Dribble", "Elbow Side"]],
+    ["Series A", ["A1", "A2"]], ["Series B", ["B1", "B2", "B3", "B5"]],
+    ["Series C", ["C1", "C2", "C3"]], ["Series D", ["D1", "D4", "D3", "D6"]],
     ["BLOB", ["Box", "Stack", "Last"]], ["SLOB", ["Sideline 1", "Sideline 2", "Last"]], ["PNR guidelines", ["Reads: flat, red, ice", "Spacing: middle, side, step"]]
   ];
   // diagrams: pos = 5 players [x,y], mv = moves [x1,y1,x2,y2,type]
   const sets = [
-    ["H1A", "Horns Weave + PNR", 30, 1.0, "Horns look with weave action into a pick and roll. Our main half court set.",
+    ["H1A", "", 30, 1.0, "Add the description of this set.",
       [[250, 300], [130, 250], [370, 250], [185, 200], [315, 200]], [[250, 300, 200, 220, "cut"], [185, 200, 232, 262, "screen"], [130, 250, 150, 120, "cut"], [315, 200, 300, 110, "cut"], [250, 300, 130, 250, "pass"]]],
-    ["H2A", "Ghost Flare", 9, 1.71, "Ghost screen into a flare for the shooter. High value, low volume.",
+    ["H2A", "", 9, 1.71, "Add the description of this set.",
       [[250, 310], [90, 230], [410, 230], [190, 180], [310, 180]], [[250, 310, 190, 200, "pass"], [310, 180, 410, 120, "screen"], [410, 230, 440, 130, "cut"], [190, 180, 150, 110, "cut"]]],
-    ["H3A", "Post Up", 8, 0.33, "Entry to the post after a shuffle. Low efficiency in the sample.",
+    ["H3A", "", 8, 0.33, "Add the description of this set.",
       [[250, 300], [100, 240], [400, 240], [180, 160], [330, 130]], [[250, 300, 180, 240, "pass"], [100, 240, 160, 130, "cut"], [330, 130, 190, 130, "screen"], [180, 240, 175, 130, "pass"]]],
-    ["H1C", "Horns", 8, 0.81, "Base horns look, early reads for the 4 and 5.",
+    ["H1C", "", 8, 0.81, "Add the description of this set.",
       [[250, 310], [90, 250], [410, 250], [190, 190], [310, 190]], [[250, 310, 190, 230, "pass"], [190, 190, 210, 250, "screen"], [310, 190, 290, 250, "screen"], [90, 250, 120, 140, "cut"]]],
-    ["T1", "Ball Reversal DHO", 16, 1.25, "Reverse the ball and hand off on the second side.",
+    ["T1", "", 16, 1.25, "Add the description of this set.",
       [[150, 320], [250, 340], [400, 250], [120, 190], [350, 170]], [[150, 320, 250, 340, "pass"], [250, 340, 400, 250, "pass"], [400, 250, 340, 190, "cut"], [350, 170, 410, 220, "screen"]]]
   ].map(([code, name, use, ppp, desc, pos, mv]) => ({ code, name, use, ppp, desc, pos, mv }));
   const rotation = {
@@ -143,7 +143,7 @@
     const p = roster.find(x => x.name.includes(last));
     return { id: p.id, n: p.n, name: p.name, goals: [goal], metrics: [["3P%", r(25, 45)], ["TS%", r(48, 62)], ["AST/TO", r(1, 3, 1)], ["Min", r(15, 30, 1)]].map(([k, v]) => ({ k, v, series: Array.from({ length: 6 }, () => r(20, 60)) })) };
   });
-  const clips = [["Horns Weave + PNR", "Q2 6:42"], ["Ghost Flare three", "Q3 8:15"], ["Transition stop", "Q1 3:20"], ["BLOB Box", "Q4 4:08"], ["Ice on the ball screen", "Q2 1:55"], ["Offensive rebound", "Q4 2:31"]];
+  const clips = [["H1A", "Q2 6:42"], ["H2A", "Q3 8:15"], ["Transition stop", "Q1 3:20"], ["BLOB Box", "Q4 4:08"], ["Ice on the ball screen", "Q2 1:55"], ["Offensive rebound", "Q4 2:31"]];
 
   window.HUB = {
     club, teams, games, compName, roster, teamStats, sample, trendSeries, seasonPlay, quarters, rivals, playbook, sets, rotation, dev, clips,

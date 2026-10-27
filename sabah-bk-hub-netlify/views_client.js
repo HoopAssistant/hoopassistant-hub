@@ -96,7 +96,7 @@ window.HUB.V2s.push(function (K) {
     let cmp = "";
     if (tr.length > 1) { const cats = count(aggregate(tr), c => [c[2]]).map(x => x[0]).slice(0, 10), cs = tr.map(s => Object.fromEntries(count(data(s).clips, c => [c[2]])));
       cmp = card("Training comparison", `<table class="dense"><tr><th>Category</th>${tr.map(s => `<th class="n">${esc(s.label.replace("Training ", ""))}</th>`).join("")}</tr>${cats.map(k => `<tr><td>${esc(k)}</td>${cs.map(m => `<td class="n">${m[k] || 0}</td>`).join("")}</tr>`).join("")}</table>`, "client"); }
-    return head("client", "Client Data", '<span class="note">Anonymized test data from a real client</span>') + `<div class="wm">Real tagging exports (Nacsport) with player and team names replaced by aliases: Own = your team, Opp = the scouted rival, Rival 1 and 2, Opponent A to C.</div>` + list + scout + cmp + sourcesCard();
+    return head("client", "Client Data", '<span class="note">Anonymized test data from a real client</span>') + `<div class="wm">For privacy reasons, player, team and set names are replaced by codes. Real tagging exports (Nacsport): Own = your team, Opp = the scouted rival, Rival 1 and 2, Opponent A to C.</div>` + list + scout + cmp + sourcesCard();
   };
   const detail = id => {
     const s = sessions().find(x => x.id === id); if (!s) return `<div class="sb"><h2>Not found</h2><p>That session does not exist. <a class="lnk" href="#/client">Back to Client Data</a></p></div>`;

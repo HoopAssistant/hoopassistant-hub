@@ -417,8 +417,8 @@
       const fl = ["All", "Half court", "Transition", "SLOB", "BLOB", "ATO"], sf = preSet;
       const rowsT = H.setTable.filter(s => sf === "All" || s.cat === sf || (sf === "With an adjustment" && s.adj) || (sf === "Key sets" && s.star));
       const pbk = card("Playbook", `<div class="tabs pill">${fl.concat(["With an adjustment", "Key sets"]).map(f => `<a data-ps="${f}" class="${sf === f ? "on" : ""}">${f} <small>${f === "All" ? H.setTable.length : ""}</small></a>`).join("")}</div>
-        <div class="pbtab"><div><div class="setrow h"><span></span><span>CODE</span><span>SET</span><span>USE</span><span>PPP</span><span>OUR ADJUSTMENT</span></div>${rowsT.map(s => `<div class="setrow" data-clipq="${s.name}"><span>${s.star ? "★" : ""}</span><span><span class="codechip">${s.code}</span></span><span><b>${s.name}</b><br><small class="mut">${s.cat}${s.call ? " · " + s.call : ""}</small></span><span><i class="useb" style="width:${s.use * 1.4}px"></i>${s.use}</span><span><span class="hc" style="background:${ppc(s.ppp)}">${s.ppp.toFixed(2)}</span></span><span class="adj">${s.adj}</span></div>`).join("")}</div>
-        <div class="keysets"><h3>★ KEY SETS</h3>${H.setTable.filter(s => s.star).slice(0, 5).map(s => `<a data-clipq="${s.name}">${s.code} ${s.name}<small class="mut"> · ${s.ppp.toFixed(2)}</small></a>`).join("")}</div></div>`, "sample");
+        <div class="pbtab"><div><div class="setrow h"><span></span><span>CODE</span><span>SET</span><span>USE</span><span>PPP</span><span>OUR ADJUSTMENT</span></div>${rowsT.map(s => `<div class="setrow" data-clipq="${s.name}"><span>${s.star ? "★" : ""}</span><span><span class="codechip">${s.code}</span></span><span><b>${s.name || "Set"}</b><br><small class="mut">${s.cat}${s.call ? " · " + s.call : ""}</small></span><span><i class="useb" style="width:${s.use * 1.4}px"></i>${s.use}</span><span><span class="hc" style="background:${ppc(s.ppp)}">${s.ppp.toFixed(2)}</span></span><span class="adj">${s.adj}</span></div>`).join("")}</div>
+        <div class="keysets"><h3>★ KEY SETS</h3>${H.setTable.filter(s => s.star).slice(0, 5).map(s => `<a data-clipq="${s.name || s.code}">${s.code}${s.name ? " " + s.name : ""}<small class="mut"> · ${s.ppp.toFixed(2)}</small></a>`).join("")}</div></div>`, "sample");
       return head("pre", "Pre Game") + `<div class="pgnav"><a class="btn" href="#/pre">‹ Back</a></div><div class="ctrl"><b>${gm.date} · ${vs(gm)} ${tn(id).toUpperCase()} · ${gm.comp}</b><span class="pill y">${gm.score ? "FINISHED" : "UPCOMING"}</span><span>READING</span><select id="rv">${ids.map(k => `<option value="${k}" ${k === id ? "selected" : ""}>${tn(k)}</option>`).join("")}</select><span class="mut">COLOUR LESS → MORE</span></div>` + season + stat + roster + pcards + shot + pbk;
     },
     gameplan() {
@@ -446,11 +446,11 @@
       return head("playbook", "Playbook") + `<div class="ctrlrow"><div class="tabs pill">${[["Offense", "Offense"], ["Defense", "Defense"], ["ATOs", "ATO's"]].map(([k, n]) => `<a href="#/playbook/${k}" class="${tab === k ? "on" : ""}">${n}</a>`).join("")}</div><button class="edit" data-clipq="Edit playbook">✎ Edit</button></div>
         <div class="pbk">${H.pbk[tab].map(c => `<div class="pb"><h3 style="background:${c[1]}">${c[0]}</h3><ul>${c[2].map(x => `<li class="ck" data-clipq="${x[0]}"><b>${x[0]}</b> <span class="mut">${x[1]}</span></li>`).join("")}</ul></div>`).join("")}</div>
         <div class="panel"><h3>PLAYBOOK VIDEO</h3><div class="wm" style="margin:0">No playbook video yet. HoopAssistant uploads the walkthrough here.</div></div>` +
-        (tab === "Offense" ? `<h3 class="sh" style="margin-top:22px">Key sets</h3><div class="grid g3">${H.sets.map(s => `<a class="setc" href="#/set/${s.code}">${diagram(s)}<div><b>${s.code} · ${s.name}</b><small>${s.use} uses · ${s.ppp.toFixed(2)} ppp</small></div></a>`).join("")}</div>` : "");
+        (tab === "Offense" ? `<h3 class="sh" style="margin-top:22px">Key sets</h3><div class="grid g3">${H.sets.map(s => `<a class="setc" href="#/set/${s.code}">${diagram(s)}<div><b>${s.code}${s.name ? " · " + s.name : ""}</b><small>${s.use} uses · ${s.ppp.toFixed(2)} ppp</small></div></a>`).join("")}</div>` : "");
     },
     set(code) {
       const s = H.sets.find(x => x.code === code); if (!s) return V.playbook();
-      return head("set", `${s.code} · ${s.name}`, `<a class="btn" href="#/playbook">‹ Playbook</a> `) + `<div class="grid g2">${card("Diagram", diagram(s), "sample")}
+      return head("set", `${s.code}${s.name ? " · " + s.name : ""}`, `<a class="btn" href="#/playbook">‹ Playbook</a> `) + `<div class="grid g2">${card("Diagram", diagram(s), "sample")}
         <div>${card("Summary", `<div class="grid g2">${kpi("Uses", s.use)}${kpi("Points per possession", s.ppp.toFixed(2), s.ppp >= 1.1 ? "g" : s.ppp < 0.9 ? "r" : "")}</div><p>${s.desc}</p>`, "sample")}${card("Clips of this set", clips(3, s.name), "sample")}</div></div>`;
     },
     dev(arg) {
@@ -471,7 +471,7 @@
   const clipModal = (i, q) => { const c = H.clips[(+i || 0) % H.clips.length], n = (+i || 0);
     modal(`<div class="vid"><div class="vbig">▶</div><div class="vcap">${q || c[0]}<small>${c[1]}</small></div></div><div class="mrow"><button data-clip="${(n + H.clips.length - 1) % H.clips.length}" data-q="${q || ""}">‹ Previous</button><button class="p" data-act="clipPl" data-n="${(q || c[0]).replace(/"/g, "")}">Add to playlist</button><button data-clip="${(n + 1) % H.clips.length}" data-q="${q || ""}">Next ›</button></div><p class="note">${chip("sample")} In production each play links to the exact moment in the game video.</p>`); };
   const metModal = id => { const m = MET[id]; if (!m) return; modal(`<h2>${m.title}</h2>${lineChart(m.series, m.labels, m.o)}<table><tr><th></th>${m.series.map(s => `<th class="n">${s.name}</th>`).join("")}</tr>${m.labels.map((l, i) => `<tr><td>${l}</td>${m.series.map(s => `<td class="n">${s.vals[i]}</td>`).join("")}</tr>`).join("")}</table><p class="note">${chip(m.o.real ? "scrape" : "sample")}</p>`); };
-  const toModal = () => modal(`<div class="toc"><small>TIMEOUT CARD · ${tn("SBK")} vs ${tn(next.opp)}</small><div class="grid g3"><div><b>Ours</b>Horns Weave, then Ghost Flare</div><div><b>Theirs</b>Ice the ball screen, switch the 1 to 4</div><div><b>Rotation</b>Ertel in at 6:00, Perkins at 5:00</div></div></div>`);
+  const toModal = () => modal(`<div class="toc"><small>TIMEOUT CARD · ${tn("SBK")} vs ${tn(next.opp)}</small><div class="grid g3"><div><b>Ours</b>H1A, then H2A</div><div><b>Theirs</b>Ice the ball screen, switch the 1 to 4</div><div><b>Rotation</b>Ertel in at 6:00, Perkins at 5:00</div></div></div>`);
 
   // ---------- kit for the real-data views (views_*.js)
   H.acts = H.acts || {}; H.inputs = H.inputs || {};
@@ -625,7 +625,7 @@
     <p><b>Sample.</b> Items tagged Sample (practice tagging, video clips, some scouting) show what HoopAssistant adds on top of the league data: tagging from video, clip playlists and staff workflows. They use placeholder numbers until the club tags real sessions.</p>
     <p class="mut">Prepared by HoopAssistant. League data is refreshed by running one script; nothing else changes.</p></div>`); return false; };
   $("#banner").innerHTML = `<span class="bn"><b>HOOPASSISTANT</b> Intelligence hub · ${H.club.name} · ${H.club.league} ${H.club.season}</span><span class="bs">Source: FIBA Champions League official play by play · ${RXr.games.length} games · ${RXr.poss.length.toLocaleString("en")} possessions · updated to ${lastD}</span><span class="bk"><span class="tag scrape">Real data</span><span class="tag sample">Sample</span><a data-act="method">Methodology ›</a></span>`;
-  document.querySelector(".foot").innerHTML = `<b>HoopAssistant</b> · Data: FIBA Basketball Champions League · <a data-act="method">Methodology</a>`;
+  document.querySelector(".foot").innerHTML = `<b>HoopAssistant</b> · For privacy reasons, player, team and set names from client data are replaced by codes. · Data: FIBA Basketball Champions League · <a data-act="method">Methodology</a>`;
   window.addEventListener("hashchange", () => { closeModal(); render(); }); render();
   window.addEventListener("storage", e => {
     if (!e.key || e.key.indexOf("sbk_") !== 0) return; resetPractices();

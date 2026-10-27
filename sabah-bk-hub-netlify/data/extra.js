@@ -11,16 +11,16 @@
   H.pbk = {
     Offense: [
       ["Fast break", "#2f7fd0", [["Outlet", ""], ["Kick ahead", ""], ["Kick across", ""], ["Rim runner", ""], ["Early 1 on 1", ""]]],
-      ["Secondary break", "#2f7fd0", [["Punch", "Step with PG, others split off screen"], ["7 / 7 Clear", ""], ["5 Side", "Off screens"], ["5 Zoom", "DHO + PnR middle"], ["5 Dribble", "Cut + DHO"], ["54", "Flare"]]],
-      ["1 Series", "#27ae60", [["1", "ghost 1-2"], ["15", "ghost veer + ghost"]]],
-      ["2 Series", "#27ae60", [["2 Low", ""], ["2 Flash", "spain flare"], ["2 Down", ""], ["2 C", "twist with the 4 + double drag"], ["2 Special", "PnR last + off screen"], ["2 Side", "double exit"]]],
-      ["3 Series", "#27ae60", [["3", "side PnR / step up PnR"], ["3 C", "curl the 3 + flare, 4 + 1-5 middle PnR"], ["3 Side", "fake step + off screen / veer"], ["3 Down", "spain PnR"]]],
-      ["Elbow Series", "#27ae60", [["Elbow 4", "DH 1-4-5"], ["Elbow Vueltas", "back pick 1-3 + DHO PnR"], ["Elbow Dribble", "DHO + PnR 2-3"], ["Elbow 5", ""], ["Elbow 2", "DH 1-2-5"], ["Elbow Side", "veer"]]],
-      ["Chest Series", "#27ae60", [["Chest 24", "ram screen + PnR / pin down"], ["Chest 25", "ram screen + PnR / pin down"], ["Chest 45", "4 to dunker or space"], ["Chest 54", ""]]],
+      ["Secondary break", "#2f7fd0", [["X1", ""], ["X2", ""], ["X3", ""], ["X4", ""], ["X5", ""], ["X6", ""]]],
+      ["Series A", "#27ae60", [["A1", ""], ["A2", ""]]],
+      ["Series B", "#27ae60", [["B1", ""], ["B2", ""], ["B3", ""], ["B4", ""], ["B5", ""], ["B6", ""]]],
+      ["Series C", "#27ae60", [["C1", ""], ["C2", ""], ["C3", ""], ["C4", ""]]],
+      ["Series D", "#27ae60", [["D1", ""], ["D2", ""], ["D3", ""], ["D4", ""], ["D5", ""], ["D6", ""]]],
+      ["Series E", "#27ae60", [["E1", ""], ["E2", ""], ["E3", ""], ["E4", ""]]],
       ["VS Switch", "#c4402f", [["Guard mismatch", "1-on-1 perimeter"], ["Big mismatch", "1-on-1 post"], ["If 3/4 front", "flash, create triangle, feed inside"], ["Head", "guards DHO, attack the big"]]],
-      ["Baseline (BOB)", "#c4402f", [["Pio Pio", ""], ["Last", ""]]],
-      ["Sideline (SOB)", "#c4402f", [["3 Series", ""], ["3 Special", ""], ["Last", ""]]],
-      ["Finals", "#c4402f", [["Thumb Up", ""], ["Thumbs flash", "spain flare"], ["Thumbs down", "spain"], ["Thumbs side", "veer"]]],
+      ["Baseline (BOB)", "#c4402f", [["Y1", ""], ["Y2", ""]]],
+      ["Sideline (SOB)", "#c4402f", [["Z1", ""], ["Z2", ""], ["Z3", ""]]],
+      ["Finals", "#c4402f", [["F1", ""], ["F2", ""], ["F3", ""], ["F4", ""]]],
       ["PNR guidelines", "#7d3cb3", [["Reads", "flat, red, ice"], ["Spacing", "middle, side, step"]]],
       ["Ball inside", "#c8a232", [["Split off-screen", ""], ["Feet inside", "1x1"], ["Feet outside", "dho"]]]
     ],
@@ -31,19 +31,19 @@
       ["Zone", "#7d3cb3", [["2-3", "vs bad shooting teams"], ["Box and one", "last resort"]]],
       ["Out of bounds", "#c8a232", [["Switch all", "last 5 seconds"], ["Face guard", ""]]]
     ],
-    ATOs: [["ATO's", "#c8a232", [["Ghost Flare", "three for Blakes"], ["Horns Weave", "pick and pop"], ["Box", "lob to the big"], ["Last shot", "Ghost Flare"]]]]
+    ATOs: [["ATO's", "#c8a232", [["ATO1", ""], ["ATO2", ""], ["ATO3", ""], ["ATO4", ""]]]]
   };
 
   // ---- set table (half court, transition, SLOB, BLOB, ATO)
   const nm = [
-    ["H1A", "Horns Weave + PNR", "Half court", "41", 30], ["H0", "No structure", "Half court", "", 17], ["H1E", "PnP Spanolis Step Up", "Half court", "Horns Side", 14], ["H2A", "Ghost Flare", "Half court", "Pistol", 9],
-    ["H5A", "PD Entry Box to Big Pass", "Half court", "44", 9], ["H3A", "Iverson Shuffle Post Up", "Half court", "5 Down", 8], ["H1C", "Horns", "Half court", "Horns", 8],
-    ["T1", "Ball Reversal DHO Step Up", "Transition", "Head", 16], ["T3", "Pistol Offense", "Transition", "Head", 39], ["T5", "Side Veer", "Transition", "Thumb side", 7],
-    ["S5", "Pin Touch Flare Iso", "SLOB", "Knee", 11], ["S1", "Rip Low Post", "SLOB", "Fist", 10], ["S3", "Stagger", "SLOB", "Double Fist", 9],
-    ["B2", "Box Lob", "BLOB", "Box", 6], ["B1", "Stack Pop", "BLOB", "Stack", 5],
-    ["A1", "Ghost Flare Three", "ATO", "Ghost", 4], ["A2", "Horns Weave Pop", "ATO", "Weave", 3]
+    ["H1A", "", "Half court", "", 30], ["H0", "", "Half court", "", 17], ["H1E", "", "Half court", "", 14], ["H2A", "", "Half court", "", 9],
+    ["H5A", "", "Half court", "", 9], ["H3A", "", "Half court", "", 8], ["H1C", "", "Half court", "", 8],
+    ["T1", "", "Transition", "", 16], ["T3", "", "Transition", "", 39], ["T5", "", "Transition", "", 7],
+    ["S5", "", "SLOB", "", 11], ["S1", "", "SLOB", "", 10], ["S3", "", "SLOB", "", 9],
+    ["B2", "", "BLOB", "", 6], ["B1", "", "BLOB", "", 5],
+    ["A1", "", "ATO", "", 4], ["A2", "", "ATO", "", 3]
   ];
-  const adj = ["Weavers be aggressive + PNR our rules", "Same as our 7 but 4-5, our rules. Deny at crazy 5 or stepup PG.", "Attack or under? You say you want to play it different. I think should be under + PNR rule.", "Same as our 1. Flare between 1-2-5, always 5 screener, over/under + flat high, mentality destroys gaps.", "Rare set", "BP our rules, stay to destroy post up necessary STS switch 4", "#33 GIBSON aggressive 1x1, PNR more aggressive here to ball", "Our rules, they play a few"];
+  const adj = ["Our rules", "Switch the 1 to 4", "Ice the ball screen", "Stay home on shooters", "Rare set", "Our rules, they play a few"];
   H.setTable = nm.map((s, i) => ({ code: s[0], name: s[1], cat: s[2], call: s[3], use: s[4], ppp: r(0.78, 1.55, 2), vol: Math.round(s[4] / 2.4), last4: [r(0, 7, 0), r(0, 7, 0), r(0, 7, 0), r(0, 7, 0)].map(Math.round), adj: adj[i % adj.length], star: i % 3 === 0 }));
 
   // ---- standings (sample around the real record) + fixtures labels
