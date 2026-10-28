@@ -462,3 +462,36 @@ textarea.bigtx{white-space:pre;overflow:auto}
 .fchip.on{background:#111;color:#fff;border-color:#111}
 .clurl{width:100%;min-width:180px;padding:5px 8px;border:1px solid #cfcab8;border-radius:6px;font:12px Inter,sans-serif;box-sizing:border-box}
 .tw{overflow-x:auto}.clsrc td{vertical-align:top}.gpl select,.gpl input[type=file]{margin-top:6px}
+/* v18 rotation: colour per player, larger and heavier */
+.gantt{font-size:12px}.gantt th,.gantt td{height:34px}
+.gantt .nm{min-width:130px;font-size:14px;font-weight:700}
+.gantt .qh{height:30px;font-size:15px;background:#0e1a2b}
+.gantt .mh{width:23px;min-width:23px;font-size:11px;height:24px}
+.gantt td[data-rc]{width:23px;min-width:23px;border-bottom:2px solid #fff;border-right:2px solid #fff;background:#efece3}
+.gantt td[data-rc].on{box-shadow:inset 0 0 0 1px #0003,inset 0 -3px 0 #0003}
+.gantt .cntr td{height:30px;font-size:12px}
+.gantt .sm{font-size:12px}
+.uchip{display:inline-block;color:#fff;font:700 12px "Barlow Condensed",sans-serif;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:3px;margin:2px 4px 2px 0}
+.rotsum .unit{padding:7px 0}.rotsum .unit b{font-size:15px}
+.toon .tp{display:inline-block;font:700 14px "Barlow Condensed",sans-serif;letter-spacing:.05em;text-transform:uppercase;padding:6px 12px;border:2px solid;border-radius:4px;margin:3px 6px 3px 0}
+/* v18 client data explorer */
+.cdim{align-items:flex-end}.cdim .wm{align-self:center}
+.cdim .seg{display:flex;gap:0;flex-wrap:wrap}.cdim .seg a{cursor:pointer;padding:7px 14px;border:2px solid #111;margin-left:-2px;font:700 12px "Barlow Condensed",sans-serif;letter-spacing:.1em;text-transform:uppercase;background:#fff;color:#111}
+.cdim .seg a.on{background:#111;color:#c9a227}
+.cbars{display:flex;flex-direction:column;gap:3px;margin-top:6px}
+.cb{all:unset;box-sizing:border-box;display:grid;grid-template-columns:minmax(110px,230px) 1fr 40px 44px;gap:10px;align-items:center;padding:4px 8px;cursor:pointer;border-radius:3px;font-size:13px}
+.cb:hover{background:#eee9db}.cb:focus-visible{outline:3px solid #c9a227}
+.cb .n{font:600 13px "Barlow Condensed",sans-serif;letter-spacing:.04em;text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cb .tr{height:18px;background:#ece8db;position:relative}.cb .tr i{position:absolute;inset:0 auto 0 0;background:#2f5bd0}
+.cb b{text-align:right;font:700 15px "IBM Plex Mono",monospace}.cb small{text-align:right;color:#6b665a;font-size:11px}
+.cb.sel{background:#fbf3c8;box-shadow:inset 4px 0 0 #c9a227}.cb.sel .tr i{background:#c9a227}.cb.dim{opacity:.45}.cb.dim:hover{opacity:1}
+.tks{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}@media(max-width:900px){.tks{grid-template-columns:1fr 1fr}}
+.tk{background:#111;color:#fff;border-radius:6px;padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.tk small{font:600 10px "IBM Plex Mono",monospace;letter-spacing:.12em;text-transform:uppercase;color:#c9a227}.tk b{font:700 22px "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.03em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tk span{font-size:12px;color:#d9d6cc}
+.ctl{width:100%;height:56px;display:block;background:#faf8f1;border:1px solid #e1dccb}
+.axisn{display:flex;justify-content:space-between;font:500 10px "IBM Plex Mono",monospace;color:#6b665a;margin-top:4px}
+.hm th{font:600 10px "IBM Plex Mono",monospace;text-align:center;white-space:normal;vertical-align:bottom;max-width:110px}.hm th:first-child{text-align:left}.hm td{padding:3px;text-align:center}
+.hc{all:unset;box-sizing:border-box;display:block;min-width:44px;padding:6px 0;text-align:center;font:700 13px "IBM Plex Mono",monospace;border-radius:3px}
+button.hc:not(:disabled){cursor:pointer}button.hc:not(:disabled):hover{outline:2px solid #111}button.hc.sel{outline:3px solid #c9a227}button.hc:focus-visible{outline:3px solid #c9a227}
+.cpick{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}.cpick a{padding:6px 12px;border:2px solid #111;background:#fff;color:#111;text-decoration:none;font:700 12px "Barlow Condensed",sans-serif;letter-spacing:.1em;text-transform:uppercase}.cpick a.on{background:#111;color:#c9a227}
+@media(max-width:700px){.cb{grid-template-columns:90px 1fr 34px 40px}}

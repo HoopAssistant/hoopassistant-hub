@@ -1,6 +1,8 @@
 /* Game Plan (template + rotation tool), Playbook (links, images, playlist) and the clip playlist button. */
 window.HUB.V2s.push(function (K) {
   const { H, card, kpi, head, chip, tn, fmt, fmtL, vs, ls, modal, closeModal, render, diagram, slug, played, next } = K, RL = H.R, RX = H.real, V = H.v2;
+  const RPAL = ["#c9301f", "#2f6fd6", "#17784b", "#9a6700", "#8e44c9", "#0b7a8c", "#c23a75", "#546f1a", "#b8500a", "#3949ab", "#006d62", "#a0522d"], RPM = {}; let RPN = 0;
+  const RPC = id => RPM[id] || (RPM[id] = RPAL[RPN++ % RPAL.length]);
   const { f1, f0, f2, nm, keysFor, last, pcol } = V;
   const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
@@ -21,13 +23,14 @@ window.HUB.V2s.push(function (K) {
     const head1 = `<tr><th class="nm"></th>${[1, 2, 3, 4].map(q => `<th colspan="10" class="qh">Q${q}</th>`).join("")}<th class="sm">PLAN</th><th class="sm">AVG</th></tr>`;
     const head2 = `<tr><th class="nm"></th>${Array.from({ length: N }, (_, i) => `<th class="mh ${i % 10 === 0 ? "qs" : ""} ${P.tof.includes(i) ? "tof" : ""}" data-act="rottoflag" data-i="${i}" title="Click to mark a timeout in this minute">${i % 10 + 1}${P.tof.includes(i) ? "<b>TO</b>" : ""}</th>`).join("")}<th class="sm"></th><th class="sm"></th></tr>`;
     const body = rows.map(r => { const a = P.g[r.id] || [], t = a.filter(Boolean).length;
-      return `<tr><th class="nm"><span>${r.n != null ? "#" + r.n : ""}</span> ${esc(last(r.name))}</th>${Array.from({ length: N }, (_, i) => `<td data-rc="${r.id},${i}" class="${a[i] ? "on" : ""} ${i % 10 === 0 ? "qs" : ""}"></td>`).join("")}<td class="sm"><b>${t}'</b></td><td class="sm mut">${am[r.id] ? f1(am[r.id]) : "·"}</td></tr>`; }).join("");
+      const pc = RPC(r.id);
+      return `<tr><th class="nm" style="box-shadow:inset 6px 0 0 ${pc}"><span>${r.n != null ? "#" + r.n : ""}</span> ${esc(last(r.name))}</th>${Array.from({ length: N }, (_, i) => `<td data-rc="${r.id},${i}" class="${a[i] ? "on" : ""} ${i % 10 === 0 ? "qs" : ""}"${a[i] ? ` style="background:${pc}"` : ""}></td>`).join("")}<td class="sm"><b>${t}'</b></td><td class="sm mut">${am[r.id] ? f1(am[r.id]) : "·"}</td></tr>`; }).join("");
     const foot = `<tr class="cntr"><th class="nm">ON FLOOR</th>${Array.from({ length: N }, (_, i) => `<td class="${cnt(i) === 5 ? "ok" : "bad"} ${i % 10 === 0 ? "qs" : ""}">${cnt(i)}</td>`).join("")}<td class="sm"><b>${rows.reduce((a, r) => a + (P.g[r.id] || []).filter(Boolean).length, 0)}'</b></td><td class="sm mut">200'</td></tr>`;
     // five man units
     const U = {}; for (let i = 0; i < N; i++) { const on = onFloor(P, i); if (on.length !== 5) continue; const k = on.map(r => r.id).sort((a, b) => a - b).join(","); (U[k] = U[k] || { ids: on, m: 0 }).m++; }
     const units = Object.values(U).sort((a, b) => b.m - a.m).slice(0, 5);
     const bad = Array.from({ length: N }, (_, i) => i).filter(i => cnt(i) !== 5 && rows.some(r => (P.g[r.id] || [])[i])).length;
-    const sum = `<div class="rotsum"><div><small>FIVE MAN UNITS, MOST MINUTES</small>${units.length ? units.map(u => `<div class="unit"><b>${u.m}'</b> ${u.ids.map(r => esc(last(r.name))).join(" · ")}</div>`).join("") : '<div class="mut">Paint minutes to see the units.</div>'}</div><div><small>CHECK</small><div class="unit ${bad ? "wr" : "okk"}">${bad ? bad + " minutes without exactly five players" : "Every painted minute has five players"}</div><div class="mut" style="margin-top:6px">Timeouts marked: ${P.tof.length ? P.tof.slice().sort((a, b) => a - b).map(i => "Q" + (Math.floor(i / 10) + 1) + " min " + (i % 10 + 1)).join(", ") : "none"}</div></div></div>`;
+    const sum = `<div class="rotsum"><div><small>FIVE MAN UNITS, MOST MINUTES</small>${units.length ? units.map(u => `<div class="unit"><b>${u.m}'</b> ${u.ids.map(r => `<span class="uchip" style="background:${RPC(r.id)}">${esc(last(r.name))}</span>`).join("")}</div>`).join("") : '<div class="mut">Paint minutes to see the units.</div>'}</div><div><small>CHECK</small><div class="unit ${bad ? "wr" : "okk"}">${bad ? bad + " minutes without exactly five players" : "Every painted minute has five players"}</div><div class="mut" style="margin-top:6px">Timeouts marked: ${P.tof.length ? P.tof.slice().sort((a, b) => a - b).map(i => "Q" + (Math.floor(i / 10) + 1) + " min " + (i % 10 + 1)).join(", ") : "none"}</div></div></div>`;
     return `<div class="rotwrap"><table class="gantt">${head1}${head2}${body}${foot}</table></div>${sum}`; };
   const gplan = () => {
     const nb = nxtBCL(), code = GS.opp || (nb && RL.map[nb.opp]) || "NTR"; GS.opp = code;
@@ -41,7 +44,7 @@ window.HUB.V2s.push(function (K) {
     const plans = card("Plan", `<div class="grid g2"><label class="gpl"><b>Offense</b><textarea maxlength="20000" rows="5" data-inp="gptxt" data-f="off" placeholder="How we attack them: sets, matchups, who we look for">${esc(P.off)}</textarea></label><label class="gpl"><b>Defense</b><textarea maxlength="20000" rows="5" data-inp="gptxt" data-f="def" placeholder="Coverages, who we guard how, what we take away">${esc(P.def)}</textarea></label><label class="gpl"><b>ATO and special situations</b><textarea maxlength="20000" rows="4" data-inp="gptxt" data-f="ato" placeholder="After timeout, last shot, SLOB and BLOB">${esc(P.ato)}</textarea></label><label class="gpl"><b>Notes</b><textarea maxlength="20000" rows="4" data-inp="gptxt" data-f="notes" placeholder="Anything else for the staff">${esc(P.notes)}</textarea></label></div>
       <h3 class="sh" style="margin-top:14px">Sets we call</h3><div class="chips">${H.setTable.map(s => `<a class="oc ${P.sets.includes(s.code) ? "add" : ""}" data-act="gpset" data-c="${s.code}" style="${P.sets.includes(s.code) ? "background:#111;color:#c8a232" : ""}">${s.code}${s.name ? " " + esc(s.name) : ""}</a>`).join("")}</div>
       <div class="shbar" style="margin-top:14px"><button class="p" data-act="gptimeout">Timeout card</button><button data-act="gpprint">Print / PDF</button></div>`, "");
-    return head("gameplan", "Game Plan") + ctrl + keys + rot + plans;
+    return head("gameplan", "Game Plan") + ctrl + rot + keys + plans;
   };
   const gp = () => getPlan(GS.opp);
   const srcGame = () => GS.src || (RL.teamGames("SAB").slice(-1)[0] || {}).gid;
@@ -66,7 +69,7 @@ window.HUB.V2s.push(function (K) {
   const toCard = () => { const P = gp(), code = GS.opp, mn = Math.min(N - 1, Math.max(0, (P.tomin || 20) - 1)), on = onFloor(P, mn), ks = keysFor(code).slice(0, 3);
     const tos = P.tof.slice().sort((a, b) => a - b);
     modal(`<div class="toc"><div class="tohead"><div><small>TIMEOUT CARD</small><h2>${esc(nm(code).toUpperCase())}</h2></div><div class="tosel"><small>LINEUP AT</small><select data-chg="gpto">${Array.from({ length: N }, (_, i) => `<option value="${i + 1}" ${i === mn ? "selected" : ""}>Q${Math.floor(i / 10) + 1} min ${i % 10 + 1}</option>`).join("")}</select></div></div>
-      <div class="toon"><small>ON THE FLOOR</small><div>${on.length ? on.map(r => `<span class="tp">${r.n != null ? "#" + r.n : ""} ${esc(last(r.name))}</span>`).join("") : '<span class="mut">Paint the rotation to see who is on the floor.</span>'}</div></div>
+      <div class="toon"><small>ON THE FLOOR</small><div>${on.length ? on.map(r => `<span class="tp" style="background:${RPC(r.id)};color:#fff;border-color:${RPC(r.id)}">${r.n != null ? "#" + r.n : ""} ${esc(last(r.name))}</span>`).join("") : '<span class="mut">Paint the rotation to see who is on the floor.</span>'}</div></div>
       <div class="grid g3"><div><b>Offense</b>${esc(P.off) || '<span class="mut">' + esc(ks[0] || "·") + "</span>"}</div><div><b>Defense</b>${esc(P.def) || '<span class="mut">' + esc(ks[1] || "·") + "</span>"}</div><div><b>Sets</b>${P.sets.length ? P.sets.map(c => { const s = H.setTable.find(x => x.code === c); return esc(c + (s && s.name ? " " + s.name : "")); }).join("<br>") : '<span class="mut">No sets selected</span>'}</div></div>
       <div class="tofoot"><div><b>ATO</b> ${esc(P.ato) || "·"}</div>${P.notes ? `<div><b>Notes</b> ${esc(P.notes)}</div>` : ""}${tos.length ? `<div><b>Planned timeouts</b> ${tos.map(i => "Q" + (Math.floor(i / 10) + 1) + " min " + (i % 10 + 1)).join(", ")}</div>` : ""}</div></div>`); };
   H.acts.gptimeout = () => { toCard(); return false; };
